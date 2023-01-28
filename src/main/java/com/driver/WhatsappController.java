@@ -79,7 +79,7 @@ public class WhatsappController {
 
         return whatsappService.removeUser(user);
     }
-    /*
+
     @GetMapping("/find-messages")
     public String findMessage(Date start, Date end, int K) throws Exception{
         //This is a bonus problem and does not contains any marks
@@ -89,6 +89,5 @@ public class WhatsappController {
         return whatsappService.findMessage(start, end, K);
     }
 
-     */
 
 }

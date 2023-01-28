@@ -20,7 +20,7 @@ public class WhatsappRepository {
     public WhatsappRepository(){
         this.groupMessageMap = new HashMap<Group, List<Message>>();
         this.groupUserMap = new HashMap<Group, List<User>>();
-        this.senderMap = new HashMap<Message, User>();
+        this.senderMap = new LinkedHashMap<Message, User>();
         this.adminMap = new HashMap<Group, User>();
         this.userMobile = new HashMap<>();
         this.customGroupCount = 0;
@@ -150,6 +150,24 @@ public class WhatsappRepository {
             }
         }
             throw new Exception("User not found");
+    }
+
+    public String findMessage(Date start, Date end, int K) throws Exception{
+        //This is a bonus problem and does not contains any marks
+        // Find the Kth latest message between start and end (excluding start and end)
+        // If the number of messages between given time is less than K, throw "K is greater than the number of messages" exception
+        int k=0;
+        for(Map.Entry <Message,User> msg : senderMap.entrySet()){
+            Date curr = msg.getKey().getTimestamp();
+            if( (curr.after(start) || curr.equals(start)) && (curr.before(end) || curr.equals(end))  ){
+                k++;
+                if(k==K){
+                    return msg.getKey().getContent();
+                }
+            }
+            if(curr.after(end)) break;
+        }
+        throw new Exception("K is greater than the number of messages");
     }
 
 }
