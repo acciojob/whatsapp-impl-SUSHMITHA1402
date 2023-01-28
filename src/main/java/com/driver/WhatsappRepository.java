@@ -116,4 +116,40 @@ public class WhatsappRepository {
 
     }
 
+    public int removeUser(User user) throws Exception{
+        //This is a bonus problem and does not contains any marks
+        //A user belongs to exactly one group
+        //If user is not found in any group, throw "User not found" exception
+        //If user is found in a group and it is the admin, throw "Cannot remove admin" exception
+        //If user is not the admin, remove the user from the group, remove all its messages from all the databases, and update relevant attributes accordingly.
+        //If user is removed successfully, return (the updated number of users in the group + the updated number of messages in group + the updated number of overall messages)
+        boolean flag = false;
+        for(Map.Entry <Group,List<User> > grp: groupUserMap.entrySet()){
+            if(grp.getValue().contains(user)){
+                flag = true;
+                if(adminMap.get(grp.getKey())==user){
+                    throw new Exception("Cannot remove admin");
+                }
+                else{
+                    grp.getValue().remove(grp.getValue().indexOf(user));
+                    int userSize = grp.getValue().size();
+                    grp.getKey().setNumberOfParticipants(userSize);
+                    for(Map.Entry <Message, User> msg: senderMap.entrySet()){
+                        if(msg.getValue() == user){
+                            groupMessageMap.get(grp).remove(groupMessageMap.get(grp).indexOf(msg.getKey()));
+                            senderMap.remove(msg.getKey());
+                        }
+                    }
+                    int msgGrp = groupMessageMap.get(grp).size();
+                    int allGrp = 0;
+                    for(Map.Entry <Group, List<Message> > grpMes: groupMessageMap.entrySet()){
+                        allGrp+=grpMes.getValue().size();
+                    }
+                    return userSize+msgGrp+allGrp;
+                }
+            }
+        }
+            throw new Exception("User not found");
+    }
+
 }

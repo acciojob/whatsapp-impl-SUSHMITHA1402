@@ -68,7 +68,7 @@ public class WhatsappController {
         return whatsappService.changeAdmin(approver, user, group);
     }
 
-    /* @DeleteMapping("/remove-user")
+    @DeleteMapping("/remove-user")
     public int removeUser(User user) throws Exception{
         //This is a bonus problem and does not contains any marks
         //A user belongs to exactly one group
@@ -79,7 +79,7 @@ public class WhatsappController {
 
         return whatsappService.removeUser(user);
     }
-
+    /*
     @GetMapping("/find-messages")
     public String findMessage(Date start, Date end, int K) throws Exception{
         //This is a bonus problem and does not contains any marks
@@ -87,7 +87,8 @@ public class WhatsappController {
         // If the number of messages between given time is less than K, throw "K is greater than the number of messages" exception
 
         return whatsappService.findMessage(start, end, K);
-    } /*
+    }
 
      */
+
 }
